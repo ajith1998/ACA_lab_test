@@ -1,0 +1,85 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;ADD NIBBLE N4 AND N0 FORM MEMORY LOCATION 40000004 AND 
+                       STORE RESULT IN 4000000C 
+    2 00000000         
+    3 00000000                 AREA             NIBBLE,CODE,READONLY
+    4 00000000                 ENTRY
+    5 00000000         START
+    6 00000000 E59F0024        LDR              R0,ADD1     ;TAKING THE ADDRESS
+                                                             40000004
+    7 00000004 E5901000        LDR              R1,[R0]     ;TAKING CONTENT OF 
+                                                            R0
+    8 00000008 E1A06001        MOV              R6,R1       ;TAKING THE VALUE I
+                                                            N R6
+    9 0000000C E3A0300F        LDR              R3,=0X0000000F ;TAKING MASKING 
+                                                            BITS
+   10 00000010 E59F2018        LDR              R2,RESULT   ;TAKING ADDRESS OF 
+                                                            RESULT
+   11 00000014 E0066003        AND              R6,R3       ;MASKING ALL EXTRA 
+                                                            BITS
+   12 00000018         ;MOV R6,R6, LSR#4
+   13 00000018 E1A05821        MOV              R5,R1, LSR#16 ;SHIFT N4 TO THE 
+                                                            END
+   14 0000001C E3A0700F        LDR              R7,=0X0000000F ;TAKING BITS FOR
+                                                             MASKING
+   15 00000020 E0055007        AND              R5,R7       ;MASKING UNWANTED B
+                                                            ITS IN R5
+   16 00000024 E0864005        ADD              R4,R6,R5    ;ADD BOTH LOWER NIB
+                                                            BLE
+   17 00000028 E5824000        STR              R4,[R2]     ;STORE THAT IN RESU
+                                                            LT PLACE
+   18 0000002C         
+   19 0000002C 40000004 
+                       ADD1    DCD              &40000004
+   20 00000030 4000000C 
+                       RESULT  DCD              &4000000C
+   21 00000034                 END
+Command Line: --debug --xref --diag_suppress=9931 --apcs=interwork --depend=.\o
+bjects\a.d -o.\objects\a.o -IC:\Keil_v5\ARM\RV31\INC -IC:\Keil_v5\ARM\CMSIS\Inc
+lude --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 525" --lis
+t=.\listings\a.lst "New folder\a.s"
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+ADD1 0000002C
+
+Symbol: ADD1
+   Definitions
+      At line 19 in file New
+   Uses
+      At line 6 in file New
+Comment: ADD1 used once
+NIBBLE 00000000
+
+Symbol: NIBBLE
+   Definitions
+      At line 3 in file New
+   Uses
+      None
+Comment: NIBBLE unused
+RESULT 00000030
+
+Symbol: RESULT
+   Definitions
+      At line 20 in file New
+   Uses
+      At line 10 in file New
+Comment: RESULT used once
+START 00000000
+
+Symbol: START
+   Definitions
+      At line 5 in file New
+   Uses
+      None
+Comment: START unused
+4 symbols
+336 symbols in table
